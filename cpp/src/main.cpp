@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include "./robin_hood.hpp"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ const int DISTANCE_MULTIPLE = 100;
 bool is_debug = false;
 
 struct G {
-    unordered_map <NodeId, NodeIndex> id2idx;
+    robin_hood::unordered_map <NodeId, NodeIndex> id2idx;
     vector <NodeId> idx2id = {0};
     NodeIndex idx = 1;
     vector <vector<Edge>> edge = {vector<Edge>()};
@@ -139,17 +140,22 @@ pair <Distance, vector<NodeId>> dijkstra(NodeId start, NodeId end) {
 
 }
 
+//- original
 // Benchmark #1: ./bench.sh 20 < ../data/Tokyo_Edgelist.csv
 //  Time (mean ± σ):      2.974 s ±  0.135 s    [User: 2.932 s, System: 0.041 s]
 //  Range (min … max):    2.835 s …  3.216 s    10 runs
-// after parseLine
+//- after parseLine
 // Benchmark #1: ./bench.sh 20 < ../data/Tokyo_Edgelist.csv
 //  Time (mean ± σ):      2.726 s ±  0.022 s    [User: 2.695 s, System: 0.031 s]
 //  Range (min … max):    2.691 s …  2.760 s    10 runs
-// after unordered_map
+//- after unordered_map
 // Benchmark #1: ./bench.sh 20 < ../data/Tokyo_Edgelist.csv
 //  Time (mean ± σ):      2.606 s ±  0.030 s    [User: 2.579 s, System: 0.027 s]
 //  Range (min … max):    2.572 s …  2.666 s    10 runs
+//- after robin_hood
+// Benchmark #1: ./bench.sh 20 < ../data/Tokyo_Edgelist.csv
+//  Time (mean ± σ):      2.392 s ±  0.029 s    [User: 2.360 s, System: 0.032 s]
+//  Range (min … max):    2.363 s …  2.462 s    10 runs
 int main(int argc, char **argv) {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
